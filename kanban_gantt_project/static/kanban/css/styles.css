@@ -1,0 +1,291 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.board {
+    display: flex;
+    justify-content: space-between;
+    width: 80%;
+    background-color: white;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.column {
+    width: 30%;
+    background-color: #f0f0f0;
+    padding: 10px;
+    border-radius: 10px;
+    height: 80vh;
+    overflow-y: auto;
+}
+
+.column-title {
+    text-align: center;
+    margin-bottom: 20px;
+    padding: 10px 0;
+    border-radius: 5px;
+    font-size: 18px;
+    color: white;
+}
+
+.todo-title {
+    background-color: #787878;
+}
+
+.in-progress-title {
+    background-color: #a6c8ff;
+}
+
+.done-title {
+    background-color: #a5d6a7;
+}
+
+.task {
+    background-color: white;
+    margin: 10px 0;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    position: relative;
+}
+
+/* 우상단에 "edit"와 "x" 버튼 배치 */
+.task-controls {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    display: flex;
+    gap: 5px; /* edit와 x 사이 간격 */
+}
+
+.edit-btn {
+    background: none;
+    border: none;
+    color: #cccccc; /* 기본적으로 회색으로 표시 */
+    font-size: 16px;
+    cursor: pointer;
+    padding: 5px;
+}
+
+.edit-btn:hover {
+    color: #007bff; /* edit 버튼 호버 시 색상 */
+}
+
+.delete-btn {
+    background: none;
+    border: none;
+    color: #cccccc;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.delete-btn:hover {
+    color: #ff4d4d; /* x 버튼 호버 시 색상 */
+}
+
+.task-content {
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.task-details {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.task-icons {
+    display: flex;
+    gap: 5px;
+}
+
+.icon-email, .icon-share {
+    border: none;
+    background: none;
+    cursor: pointer;
+}
+
+.assignee-btn {
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+}
+
+.blue {
+    background-color: #3b82f6;
+}
+
+.green {
+    background-color: #10b981;
+}
+
+.yellow {
+    background-color: #f59e0b;
+}
+
+/* 작업 추가 버튼 스타일 */
+.add-task-btn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.add-task-btn:hover {
+    background-color: #45a049;
+}
+
+/* 모달 창을 화면 중앙에 배치 */
+.modal {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* 반투명 배경 */
+}
+
+.modal-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 300px;
+    max-width: 90%;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    position: relative; /* 우상단에 "x"와 "edit"를 배치하기 위해 필요 */
+    display: flex;
+    flex-direction: column; /* 수직 레이아웃을 위해 추가 */
+    align-items: stretch; /* 입력 필드가 전체 너비를 차지하도록 설정 */
+}
+
+.modal-content label {
+    font-size: 14px;
+    margin-bottom: 5px;
+    text-align: left;
+}
+
+.modal-content input {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box; /* 패딩을 포함한 크기 계산 */
+}
+
+.modal-content button {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.modal-content button:hover {
+    background-color: #0056b3;
+}
+
+
+.icon-email, .icon-share {
+    background-color: transparent;
+    border: none;
+    font-size: 20px;
+    color: #555; /* 기본 아이콘 색상 */
+    cursor: pointer;
+    padding: 5px;
+}
+
+.icon-email:hover, .icon-share:hover {
+    color: #007bff; /* 호버 시 색상 변경 */
+}
+
+.icon-email i, .icon-share i {
+    transition: color 0.3s ease; /* 부드러운 색상 전환 */
+}
+
+
+
+/* 전체 화면 중앙 정렬 */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    display: flex;
+    flex-direction: column; /* 세로 정렬 추가 */
+    align-items: center;
+    height: 100vh;
+}
+/* 상단 헤더 스타일 */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 90%;
+    max-width: 1200px;
+    background-color: hsl(121, 60%, 83%);
+    color: #000000;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 10px 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+    margin-bottom: 20px;
+    box-sizing: border-box;
+}
+
+/* 버튼을 감싸는 컨테이너 */
+.header-buttons {
+    display: flex;
+    gap: 10px; /* 버튼 간격 설정 */
+}
+
+/* CSV 저장 및 불러오기 버튼 스타일 */
+.save-csv-btn, .load-csv-btn {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.save-csv-btn:hover, .load-csv-btn:hover {
+    background-color: #0056b3;
+}
+
+
+/* 보드 영역 스타일 */
+.board {
+    display: flex;
+    justify-content: space-between;
+    width: 90%;
+    max-width: 1200px; /* 보드 최대 너비 설정 */
+    background-color: white;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+}

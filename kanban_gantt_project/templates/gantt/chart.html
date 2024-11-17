@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gantt Chart</title>
+</head>
+<body>
+    <h1>Gantt Chart</h1>
+    <table border="1">
+        <tr>
+            <th>Title</th>
+            <th>Assigned To</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+        </tr>
+        {% for task in tasks %}
+        <tr>
+            <td>{{ task.title }}</td>
+            <td>{{ task.assigned_to }}</td>
+            <td>{{ task.start_date }}</td>
+            <td>{{ task.end_date }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
