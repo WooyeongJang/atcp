@@ -79,8 +79,12 @@ WSGI_APPLICATION = 'kanban_gantt_project.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',  # PostgreSQL 사용
+        'NAME': 'kanban_django',                    # 데이터베이스 이름
+        'USER': 'postgres',                         # PostgreSQL 사용자 이름
+        'PASSWORD': 'postgres',                     # PostgreSQL 비밀번호
+        'HOST': 'localhost',                        # 로컬 서버
+        'PORT': '5432',                             # PostgreSQL 기본 포트
     }
 }
 
