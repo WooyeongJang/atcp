@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'kanban',
     'gantt',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
@@ -83,8 +84,8 @@ DATABASES = {
         'NAME': 'kanban_django',                    # 데이터베이스 이름
         'USER': 'postgres',                         # PostgreSQL 사용자 이름
         'PASSWORD': 'postgres',                     # PostgreSQL 비밀번호
-        'HOST': 'localhost',                        # 로컬 서버
-        'PORT': '5432',                             # PostgreSQL 기본 포트
+        'HOST': '192.168.10.39',                        # 로컬 서버
+        'PORT': '5433',                             # PostgreSQL 기본 포트
     }
 }
 
