@@ -2,6 +2,14 @@ let taskIdCounter = 4;
 let currentTaskId = null;  // 현재 편집 중인 작업 ID를 저장
 
 // 로컬 스토리지에 작업을 저장하는 함수
+// 태그가 column의 클래스를 가진 HTML요소를 가져와서 columns 객체로 만든다.
+// task의 정보를 담기 위해 빈 객체를 생성한다.
+// forEach로 모든 columns의 개수만큼 순회하면서 columnNamem columnTasks등 정보를 수집힌다.
+// columnName은 column의 클래스를 가진 HTML요소에서 h2태그 안의 textContent의 집합
+// columnTasks는 task의 클래스를 가진 HTML요소를 가져와 배열로 변환한 뒤 각 정보를 객체로 변환한다.
+// ex) columnTasks = {'To do', 'task4', '', '담담자 없음', '부서 없음'}
+// 객체로 변환된 정보를 키값(columnName)으로해서 columnTasks정보로 저장한다.
+// 키값으로 저장된 tasks를 로컬스토리지에(kanbanTasks)에 저장(로컬스토리지는 문자열로 변환해야한다.)
 function saveTasks() {
     const columns = document.querySelectorAll('.column');
     const tasks = {};
@@ -9,14 +17,20 @@ function saveTasks() {
     columns.forEach(column => {
         const columnName = column.querySelector('h2').textContent;
         const columnTasks = Array.from(column.querySelectorAll('.task')).map(task => ({
+            //Task번호
             id: task.id,
+            //작업내용
             content: task.querySelector('.task-content').innerText,
+            //담당자확인
             assignee: task.querySelector('.assignee-btn')?.innerText || '담당자 없음',
+            //부서확인
             department: task.querySelector('.task-department')?.innerText || '부서 없음',  // 부서 정보 저장
         }));
+        //칼럼이름을 키값으로해서 columnTasks정보를 저장한다.
         tasks[columnName] = columnTasks;
     });
 
+    //위에 columnName을 키값으로해서 저장된 tasks를 문자열로 변환시켜 로컬스토리지(kanbanTasks)로 저장
     localStorage.setItem('kanbanTasks', JSON.stringify(tasks));
 }
 
@@ -95,6 +109,11 @@ function drop(event) {
 }
 
 // 작업 추가 함수
+// column 클래스를 가진 모든 HTML요소를 columns 객체로 만든다. 빈 객체 column 생성.
+// column을 forEach문을 통해 columns의 객체 갯수만큼 순회한다. 입력된 columName과 columns의 객체 정보와
+// 같을 경우 빈 column 객체는 순회하는 col 값이 된다.
+// 이제 column 값이 정해진다면 taskId = taskIdCounter(증가)가 된다. 그리고 createTaskElement의 매개변수로 들어감.
+// 마지막으로 task가 저장된다.
 function addTask(columnName) {
     const columns = document.querySelectorAll('.column');
     let column;
@@ -108,13 +127,17 @@ function addTask(columnName) {
     if (column) {
         const taskId = `task${taskIdCounter++}`;
         // '새 작업', '담당자 없음', '부서 없음'으로 초기화하여 작업 생성
-        createTaskElement(column, taskId, '새 작업', '담당자 없음', '부서 없음'); 
+        createTaskElement(column, taskId, '새 작업', '담당자 없음', '부서 없음');
+        //createTaskElement(column, 4, content='새 작업', assignee='담당자 없음', department='부서 없음')
         saveTasks(); // 작업 추가 후 저장
     }
 }
 
 
 // 모달 창 열기 (편집)
+// taskId 값을 매개변수로 해서 들어오면 현재 작업중인 currentTaskId = taskId로 변경
+// 각각의 클래스 가진 HTML요소의 text값을 가져와서 새로운 객체에 저장한다. 그리고 이 객체는 모달창의
+// id값을 통해 value으로 만들어진다. 
 function openEditModal(taskId) {
     currentTaskId = taskId;  // 현재 편집 중인 작업 ID 설정
     const taskElement = document.getElementById(taskId);
