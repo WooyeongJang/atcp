@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test List</title>
+</head>
+<body>
+    <h1>Test 데이터 관리</h1>
+
+    <!-- 입력 폼 -->
+    <h2>데이터 추가</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">추가</button>
+    </form>
+
+    <!-- 테이블 출력 -->
+    <h2>데이터 목록</h2>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>순번</th>
+                <th>내용</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for test in tests %}
+                <tr>
+                    <td>{{ test.number }}</td>
+                    <td>{{ test.content }}</td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="2">데이터가 없습니다.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
