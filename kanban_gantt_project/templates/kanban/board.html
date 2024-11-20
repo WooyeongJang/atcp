@@ -12,44 +12,69 @@
     <header class="header">
         <h1>칸반 보드</h1>
         <div class="header-buttons">
+            <button class="add-task-btn" onclick="openEditModal()">작업 추가</button>
             <button class="load-csv-btn" onclick="loadTasksFromCSV()">CSV 불러오기</button>
             <button class="save-csv-btn" onclick="saveTasksToCSV()">CSV로 저장</button>
         </div>
     </header>
     <div class="board">
-        <!-- TODO 컬럼에만 작업 추가 버튼 -->
-        <div class="column todo" ondrop="drop(event)" ondragover="allowDrop(event)">
-            <h2 class="column-title todo-title">To Do</h2>
-            <button class="add-task-btn" onclick="addTask('To Do')">작업 추가</button>
-        </div>
-
-        <!-- In Progress 컬럼 -->
-        <div class="column in-progress" ondrop="drop(event)" ondragover="allowDrop(event)">
-            <h2 class="column-title in-progress-title">In Progress</h2>
-        </div>
-
-        <!-- Closed 컬럼 -->
-        <div class="column done" ondrop="drop(event)" ondragover="allowDrop(event)">
-            <h2 class="column-title done-title">Closed</h2>
-        </div>
+    <!-- TODO 컬럼 -->
+    <div class="column todo" ondrop="drop(event)" ondragover="allowDrop(event)">
+        <h2 class="column-title todo-title">To Do</h2>
+        {% for column in columns %}
+            {% if column.name == 'To Do' %}
+                {% for task in column.tasks.all %}
+                    <div class="task" draggable="true" ondragstart="drag(event)">
+                        <p>{{ task.name }}</p>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endfor %}
     </div>
 
-    <!-- 편집 모달 창 -->
-    <div id="editModal" class="modal">
-        <div class="modal-content">
-            <h2>작업 편집</h2>
-            <label for="editTaskContent">작업 내용:</label>
-            <input type="text" id="editTaskContent">
-            <label for="editTaskAssignee">담당자:</label>
-            <input type="text" id="editTaskAssignee">
-            <label for="editTaskDepartment">부서:</label>
-            <input type="text" id="editTaskDepartment">
-            <button onclick="saveEditTask()">저장</button>
-            <button onclick="closeEditModal()">취소</button>
-        </div>
+    <!-- In Progress 컬럼 -->
+    <div class="column in-progress" ondrop="drop(event)" ondragover="allowDrop(event)">
+        <h2 class="column-title in-progress-title">In Progress</h2>
+        {% for column in columns %}
+            {% if column.name == 'In Progress' %}
+                {% for task in column.tasks.all %}
+                    <div class="task" draggable="true" ondragstart="drag(event)">
+                        <p>{{ task.name }}</p>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endfor %}
     </div>
+
+    <!-- Closed 컬럼 -->
+    <div class="column done" ondrop="drop(event)" ondragover="allowDrop(event)">
+        <h2 class="column-title done-title">Closed</h2>
+        {% for column in columns %}
+            {% if column.name == 'Closed' %}
+                {% for task in column.tasks.all %}
+                    <div class="task" draggable="true" ondragstart="drag(event)">
+                        <p>{{ task.name }}</p>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endfor %}
+    </div>
+</div>
+
+<!-- 편집 모달 창 -->
+<div id="editModal" class="modal">
+    <div class="modal-content">
+        <h2>작업 편집</h2>
+        <form id="editTaskForm" method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="button" onclick="saveEditTask()">저장</button>
+            <button type="button" onclick="closeEditModal()">취소</button>
+        </form>
+    </div>
+</div>
    
 
-    <script src="{% static 'kanban/js/scripts.js' %}" defer></script>
+    <script src="{% static 'kanban/js/scripts_fix.js' %}" defer></script>
 </body>
 </html>
