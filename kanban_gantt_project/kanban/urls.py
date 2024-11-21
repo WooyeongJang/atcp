@@ -9,9 +9,12 @@ router.register(r'tasks', TaskViewSet)
 
 urlpatterns = [
     path('', views.board_view, name='kanban_board'),
-    path('test/', views.board_test_view, name='kanban_board_test'),
-    path('edit_task/<int:task_id>/', views.edit_task, name='edit_task'),
+    path('test/', views.board_test_view, name='board_test_view'),
 
 
     path('', include(router.urls)),
+
+
+    # delete task, edit task
+    path('delete_task/<int:task_id>/', views.delete_task, name='delete_task'),
 ]

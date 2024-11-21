@@ -11,4 +11,8 @@ class TaskForm(forms.ModelForm):
 
     class Meta:
         model = Task
-        fields = ['description', 'column']  # 'name' 필드를 제거하고 올바른 필드 이름을 사용
+        fields = ['title', 'description', 'column', 'priority', 'assigned_to', 'start_date', 'end_date']
+        widgets = {
+            'start_date': forms.DateInput(attrs={'type': 'date'}),
+            'end_date': forms.DateInput(attrs={'type': 'date'}),
+        }

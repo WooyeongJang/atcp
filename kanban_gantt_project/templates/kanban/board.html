@@ -24,9 +24,27 @@
         {% for column in columns %}
             {% if column.name == 'To Do' %}
                 {% for task in column.tasks.all %}
-                    <div class="task" draggable="true" ondragstart="drag(event)">
-                        <p>{{ task.name }}</p>
+                <div id="task-{{ task.id }}" class="task" draggable="true" ondragstart="drag(event)">
+                    <span class="task-content" onclick=" openCheckModal('{{ task.id }}')">{{ task.title }}</span>
+                    <div class="task-controls">
+                        <!-- Edit Task -->
+                        <button class="edit-btn" type="button" onclick="openEditModal('{{ task.id }}')">edit</button>
+                        
+                        <!-- Delete Task -->
+                        <form method="post" action="{% url 'delete_task' task.id %}" style="display:inline;">
+                            {% csrf_token %}
+                            <button class="delete-btn" type="submit">x</button>
+                        </form>
                     </div>
+                    <div class="task-details">
+                        <span class="task-icons">
+                            <button class="icon-email"><i class="fas fa-envelope"></i></button>
+                            <button class="icon-share"><i class="fas fa-share-alt"></i></button>
+                        </span>
+                        <span class="task-department">{{ task.department }}</span>
+                        <button class="assignee-btn blue">{{ task.assigned_to }}</button>
+                    </div>
+                </div>
                 {% endfor %}
             {% endif %}
         {% endfor %}
@@ -39,7 +57,7 @@
             {% if column.name == 'In Progress' %}
                 {% for task in column.tasks.all %}
                     <div class="task" draggable="true" ondragstart="drag(event)">
-                        <p>{{ task.name }}</p>
+                        <p>{{ task.title }}</p>
                     </div>
                 {% endfor %}
             {% endif %}
@@ -53,7 +71,7 @@
             {% if column.name == 'Closed' %}
                 {% for task in column.tasks.all %}
                     <div class="task" draggable="true" ondragstart="drag(event)">
-                        <p>{{ task.name }}</p>
+                        <p>{{ task.title }}</p>
                     </div>
                 {% endfor %}
             {% endif %}
@@ -73,6 +91,46 @@
         </form>
     </div>
 </div>
+
+<!-- 조회 모달 창 -->
+<div id="checkModal" class="modal">
+    <div class="modal-content">
+        <h2>작업 조회</h2>
+        <form id="checkTaskForm">
+            <div class="form-group">
+                <label for="checkTaskTitle">작업 제목</label>
+                <input type="text" id="checkTaskTitle" class="form-control" disabled>
+            </div>
+            <div class="form-group">
+                <label for="checkTaskDescription">작업 설명</label>
+                <textarea id="checkTaskDescription" class="form-control" disabled></textarea>
+            </div>
+            <div class="form-group">
+                <label for="checkTaskColumn">칼럼</label>
+                <input type="text" id="checkTaskColumn" class="form-control" disabled>
+            </div>
+            <div class="form-group">
+                <label for="checkTaskPriority">우선순위</label>
+                <input type="number" id="checkTaskPriority" class="form-control" disabled>
+            </div>
+            <div class="form-group">
+                <label for="checkTaskAssignedTo">담당자</label>
+                <input type="text" id="checkTaskAssignedTo" class="form-control" disabled>
+            </div>
+            <div class="form-group">
+                <label for="checkTaskStartDate">시작일</label>
+                <input type="date" id="checkTaskStartDate" class="form-control" disabled>
+            </div>
+            <div class="form-group">
+                <label for="checkTaskEndDate">종료일</label>
+                <input type="date" id="checkTaskEndDate" class="form-control" disabled>
+            </div>
+            <button type="button" onclick="closeCheckModal()">닫기</button>
+        </form>
+    </div>
+</div>
+   
+
    
 
     <script src="{% static 'kanban/js/scripts_fix.js' %}" defer></script>
