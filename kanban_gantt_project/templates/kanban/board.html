@@ -25,10 +25,11 @@
             {% if column.name == 'To Do' %}
                 {% for task in column.tasks.all %}
                 <div id="task-{{ task.id }}" class="task" draggable="true" ondragstart="drag(event)">
-                    <span class="task-content" onclick=" openCheckModal('{{ task.id }}')">{{ task.title }}</span>
+                    <span class="task-content" onclick="openDetailModal({{ task.id }})">{{ task.title }}</span>
+                    <a href="{% url 'detail_task' task.id %}">{{ task.title }}</a>
                     <div class="task-controls">
                         <!-- Edit Task -->
-                        <button class="edit-btn" type="button" onclick="openEditModal('{{ task.id }}')">edit</button>
+                        <button class="edit-btn" type="button" onclick="openDetailModal({{ task.id }})">edit</button>
                         
                         <!-- Delete Task -->
                         <form method="post" action="{% url 'delete_task' task.id %}" style="display:inline;">
@@ -83,55 +84,27 @@
 <div id="editModal" class="modal">
     <div class="modal-content">
         <h2>작업 편집</h2>
-        <form id="editTaskForm" method="post">
+        <form id="editTaskForm" method="POST">
             {% csrf_token %}
             {{ form.as_p }}
             <button type="button" onclick="saveEditTask()">저장</button>
-            <button type="button" onclick="closeEditModal()">취소</button>
+            <button type="button" onclick="closeModal()">취소</button>
         </form>
     </div>
 </div>
 
-<!-- 조회 모달 창 -->
+<!-- 확인 모달 창 -->
 <div id="checkModal" class="modal">
     <div class="modal-content">
-        <h2>작업 조회</h2>
-        <form id="checkTaskForm">
-            <div class="form-group">
-                <label for="checkTaskTitle">작업 제목</label>
-                <input type="text" id="checkTaskTitle" class="form-control" disabled>
-            </div>
-            <div class="form-group">
-                <label for="checkTaskDescription">작업 설명</label>
-                <textarea id="checkTaskDescription" class="form-control" disabled></textarea>
-            </div>
-            <div class="form-group">
-                <label for="checkTaskColumn">칼럼</label>
-                <input type="text" id="checkTaskColumn" class="form-control" disabled>
-            </div>
-            <div class="form-group">
-                <label for="checkTaskPriority">우선순위</label>
-                <input type="number" id="checkTaskPriority" class="form-control" disabled>
-            </div>
-            <div class="form-group">
-                <label for="checkTaskAssignedTo">담당자</label>
-                <input type="text" id="checkTaskAssignedTo" class="form-control" disabled>
-            </div>
-            <div class="form-group">
-                <label for="checkTaskStartDate">시작일</label>
-                <input type="date" id="checkTaskStartDate" class="form-control" disabled>
-            </div>
-            <div class="form-group">
-                <label for="checkTaskEndDate">종료일</label>
-                <input type="date" id="checkTaskEndDate" class="form-control" disabled>
-            </div>
-            <button type="button" onclick="closeCheckModal()">닫기</button>
-        </form>
+        <h2>작업 확인</h2>
+        <div id="taskDetails">
+            <p>Task ID: {{ task.id }}</p>
+            <p>Task 제목: {{ task.title }}</p>
+        </div>
+        <button type="button" onclick="closeModal()">닫기</button>
     </div>
 </div>
-   
 
-   
 
     <script src="{% static 'kanban/js/scripts_fix.js' %}" defer></script>
 </body>

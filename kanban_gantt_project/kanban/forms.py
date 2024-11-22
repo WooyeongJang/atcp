@@ -15,4 +15,8 @@ class TaskForm(forms.ModelForm):
         widgets = {
             'start_date': forms.DateInput(attrs={'type': 'date'}),
             'end_date': forms.DateInput(attrs={'type': 'date'}),
+            'description': forms.TextInput(attrs={
+                'placeholder': 'Enter a short description',
+                'maxlength': '100',  # 최대 100자 제한
+            })
         }
