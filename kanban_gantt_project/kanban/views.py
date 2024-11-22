@@ -55,7 +55,7 @@ def delete_task(request, task_id):
 def detail_task(request, task_id):
     # `task_id`를 기반으로 Task 객체를 가져옴, 없으면 404 에러 발생
     task = get_object_or_404(Task, id=task_id)
-    return render(request, 'kanban/board.html', {'task': task})
+    return render(request, 'kanban/task_detail.html', {'task': task})
 
 
 
