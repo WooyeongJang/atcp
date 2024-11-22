@@ -8,6 +8,11 @@ body {
     height: 100vh;
 }
 
+a {
+    text-decoration: none;
+    color: black;
+}
+
 .board {
     display: flex;
     justify-content: space-between;

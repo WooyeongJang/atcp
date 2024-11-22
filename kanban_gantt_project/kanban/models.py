@@ -20,17 +20,3 @@ class Task(models.Model):
 
     def __str__(self):
         return self.title
-    
-    def to_dict(self):
-        return {
-            'id': self.id,
-            'title': self.title,
-            'description': self.description,
-            'column': self.column.id,
-            'priority': self.priority,
-            'assigned_to': self.assigned_to,
-            'start_date': self.start_date,
-            'end_date': self.end_date,
-            'created_at': self.created_at,
-            'updated_at': self.updated_at,
-        }

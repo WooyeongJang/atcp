@@ -1,12 +1,14 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>칸반 보드</title>   
-    {% load static %} 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+     
     <link rel="stylesheet" href="{% static 'kanban/css/styles.css' %}">    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <title>칸반 보드</title>  
 </head>
 <body>
     <header class="header">
@@ -25,8 +27,8 @@
             {% if column.name == 'To Do' %}
                 {% for task in column.tasks.all %}
                 <div id="task-{{ task.id }}" class="task" draggable="true" ondragstart="drag(event)">
-                    <span class="task-content" onclick="openDetailModal({{ task.id }})">{{ task.title }}</span>
-                    <a href="{% url 'detail_task' task.id %}">{{ task.title }}</a>
+                    
+                    <a><span class="task-content" onclick="openDetailModal({{ task.id }})">{{ task.title }}</span></a>
                     <div class="task-controls">
                         <!-- Edit Task -->
                         <button class="edit-btn" type="button" onclick="openDetailModal({{ task.id }})">edit</button>
@@ -97,14 +99,25 @@
 <div id="checkModal" class="modal">
     <div class="modal-content">
         <h2>작업 확인</h2>
-        <div id="taskDetails">
-            <p>Task ID: {{ task.id }}</p>
-            <p>Task 제목: {{ task.title }}</p>
-        </div>
+        {% if task %}
+            <div id="taskDetails">
+                <p><strong>Task ID:</strong> {{ task.id }}</p>
+                <p><strong>Task 제목:</strong> {{ task.title }}</p>
+                <p><strong>Task 칼럼:</strong> {{ task.column }}</p>
+                <p><strong>Task 내용:</strong> {{ task.description }}</p>
+                <p><strong>Task 담당자:</strong> {{ task.assigned_to }}</p>
+                <p><strong>Task 우선순위:</strong> {{ task.priority }}</p>
+                <p><strong>Task 시작일:</strong> {{ task.start_date }}</p>
+                <p><strong>Task 마감일:</strong> {{ task.end_date }}</p>
+                <p><strong>Task 생성일:</strong> {{ task.created_at }}</p>
+                <p><strong>Task 수정일:</strong> {{ task.updated_at }}</p>
+            </div>
+        {% else %}
+            <p>Task 데이터를 불러올 수 없습니다.</p>
+        {% endif %}
         <button type="button" onclick="closeModal()">닫기</button>
     </div>
 </div>
-
 
     <script src="{% static 'kanban/js/scripts_fix.js' %}" defer></script>
 </body>

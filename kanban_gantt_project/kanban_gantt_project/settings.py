@@ -42,7 +42,6 @@ INSTALLED_APPS = [
     'kanban',
     'gantt',
     'rest_framework',
-    'db_test',
 ]
 
 MIDDLEWARE = [
