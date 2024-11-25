@@ -1,27 +1,73 @@
+/* 공통 스타일 */
 body {
     font-family: Arial, sans-serif;
     background-color: #f4f4f4;
     margin: 0;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
     height: 100vh;
 }
 
+/* 링크 스타일 */
 a {
     text-decoration: none;
     color: black;
 }
 
+/* 상단 헤더 스타일 */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 90%;
+    max-width: 1200px;
+    background-color: hsl(121, 60%, 83%);
+    color: #000000;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 10px 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+    margin-bottom: 20px;
+    box-sizing: border-box;
+}
+
+/* 버튼을 감싸는 컨테이너 */
+.header-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+/* CSV 저장 및 불러오기 버튼 스타일 */
+.save-csv-btn, .load-csv-btn {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.save-csv-btn:hover, .load-csv-btn:hover {
+    background-color: #0056b3;
+}
+
+/* 보드 영역 스타일 */
 .board {
     display: flex;
     justify-content: space-between;
-    width: 80%;
+    width: 90%;
+    max-width: 1200px;
     background-color: white;
     padding: 20px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
 }
 
+/* 컬럼 스타일 */
 .column {
     width: 30%;
     background-color: #f0f0f0;
@@ -31,6 +77,7 @@ a {
     overflow-y: auto;
 }
 
+/* 컬럼 제목 스타일 */
 .column-title {
     text-align: center;
     margin-bottom: 20px;
@@ -52,6 +99,7 @@ a {
     background-color: #a5d6a7;
 }
 
+/* 작업(Task) 스타일 */
 .task {
     background-color: white;
     margin: 10px 0;
@@ -61,40 +109,33 @@ a {
     position: relative;
 }
 
-/* 우상단에 "edit"와 "x" 버튼 배치 */
+/* Task 우상단 컨트롤 버튼 */
 .task-controls {
     position: absolute;
     top: 5px;
     right: 10px;
     display: flex;
-    gap: 5px; /* edit와 x 사이 간격 */
+    gap: 5px;
 }
 
-.edit-btn {
+.edit-btn, .delete-btn {
     background: none;
     border: none;
-    color: #cccccc; /* 기본적으로 회색으로 표시 */
     font-size: 16px;
     cursor: pointer;
     padding: 5px;
+    color: #cccccc;
 }
 
 .edit-btn:hover {
-    color: #007bff; /* edit 버튼 호버 시 색상 */
-}
-
-.delete-btn {
-    background: none;
-    border: none;
-    color: #cccccc;
-    font-size: 16px;
-    cursor: pointer;
+    color: #007bff;
 }
 
 .delete-btn:hover {
-    color: #ff4d4d; /* x 버튼 호버 시 색상 */
+    color: #ff4d4d;
 }
 
+/* 작업 콘텐츠 및 세부 정보 */
 .task-content {
     font-weight: bold;
     cursor: pointer;
@@ -116,8 +157,16 @@ a {
     border: none;
     background: none;
     cursor: pointer;
+    font-size: 20px;
+    color: #555;
+    padding: 5px;
 }
 
+.icon-email:hover, .icon-share:hover {
+    color: #007bff;
+}
+
+/* 할당 버튼 */
 .assignee-btn {
     border: none;
     padding: 5px 10px;
@@ -153,7 +202,7 @@ a {
     background-color: #45a049;
 }
 
-/* 모달 창을 화면 중앙에 배치 */
+/* 모달 창 스타일 */
 .modal {
     display: none;
     justify-content: center;
@@ -164,7 +213,7 @@ a {
     top: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* 반투명 배경 */
+    background-color: rgba(0, 0, 0, 0.5);
 }
 
 .modal-content {
@@ -172,18 +221,14 @@ a {
     padding: 20px;
     border-radius: 10px;
     width: 300px;
-
     max-width: 90%;
-    max-height: 80%; /* 화면의 80% 높이를 넘지 않도록 제한 */
-    
+    max-height: 80%;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
     text-align: center;
-    position: relative; /* 우상단에 "x"와 "edit"를 배치하기 위해 필요 */
     display: flex;
-    flex-direction: column; /* 수직 레이아웃을 위해 추가 */
-    align-items: stretch; /* 입력 필드가 전체 너비를 차지하도록 설정 */
-    
-    overflow-y: auto; /* 내용이 많을 경우 세로 스크롤 활성화 */
+    flex-direction: column;
+    align-items: stretch;
+    overflow-y: auto;
 }
 
 .modal-content label {
@@ -198,7 +243,7 @@ a {
     margin-bottom: 15px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    box-sizing: border-box; /* 패딩을 포함한 크기 계산 */
+    box-sizing: border-box;
 }
 
 .modal-content button {
@@ -217,85 +262,48 @@ a {
     background-color: #0056b3;
 }
 
-
-.icon-email, .icon-share {
-    background-color: transparent;
-    border: none;
-    font-size: 20px;
-    color: #555; /* 기본 아이콘 색상 */
-    cursor: pointer;
-    padding: 5px;
-}
-
-.icon-email:hover, .icon-share:hover {
-    color: #007bff; /* 호버 시 색상 변경 */
-}
-
-.icon-email i, .icon-share i {
-    transition: color 0.3s ease; /* 부드러운 색상 전환 */
-}
-
-
-
-/* 전체 화면 중앙 정렬 */
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    margin: 0;
-    display: flex;
-    flex-direction: column; /* 세로 정렬 추가 */
-    align-items: center;
+/* Gantt Chart 스타일 */
+.gantt-container {
+    width: 100%;
     height: 100vh;
-}
-/* 상단 헤더 스타일 */
-.header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 90%;
-    max-width: 1200px;
-    background-color: hsl(121, 60%, 83%);
-    color: #000000;
-    font-size: 12px;
-    font-weight: bold;
-    padding: 10px 20px;
+    overflow: auto; /* 가로/세로 스크롤 활성화 */
+    background-color: white;
+    padding: 20px;
+    box-sizing: border-box;
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    margin-top: 20px;
-    margin-bottom: 20px;
-    box-sizing: border-box;
 }
 
-/* 버튼을 감싸는 컨테이너 */
-.header-buttons {
-    display: flex;
-    gap: 10px; /* 버튼 간격 설정 */
-}
-
-/* CSV 저장 및 불러오기 버튼 스타일 */
-.save-csv-btn, .load-csv-btn {
-    background-color: #007bff;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: center;
     font-size: 14px;
 }
 
-.save-csv-btn:hover, .load-csv-btn:hover {
-    background-color: #0056b3;
+th, td {
+    padding: 8px;
+    border: 1px solid #ddd;
 }
 
+th {
+    background-color: #f4f4f4;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
 
-/* 보드 영역 스타일 */
-.board {
-    display: flex;
-    justify-content: space-between;
-    width: 90%;
-    max-width: 1200px; /* 보드 최대 너비 설정 */
-    background-color: white;
-    padding: 20px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    box-sizing: border-box;
+.gantt-bar {
+    position: relative;
+    height: 20px;
+    background-color: #6c757d;
+    border-radius: 4px;
+    text-align: center;
+    color: white;
+    line-height: 20px;
+    display: inline-block;
+}
+
+.timeline-header th {
+    height: 30px;
 }
