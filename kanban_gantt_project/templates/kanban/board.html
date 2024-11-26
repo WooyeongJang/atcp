@@ -31,7 +31,7 @@
                     <a><span class="task-content" onclick="openDetailModal({{ task.id }})">{{ task.title }}</span></a>
                     <div class="task-controls">
                         <!-- Edit Task -->
-                        <button class="edit-btn" type="button" onclick="openDetailModal({{ task.id }})">edit</button>
+                        <button class="edit-btn" type="button" onclick="openEditModal()">edit</button>
                         
                         <!-- Delete Task -->
                         <form method="post" action="{% url 'delete_task' task.id %}" style="display:inline;">
@@ -116,6 +116,26 @@
             <p>Task 데이터를 불러올 수 없습니다.</p>
         {% endif %}
         <button type="button" onclick="closeModal()">닫기</button>
+    </div>
+</div>
+
+
+<div id="editModal" class="modal">
+    <div class="modal-content">
+        <h2>작업 수정</h2>
+        <form id="editTaskForm" method="POST">
+            {% csrf_token %}
+            <div id="taskDetails">
+                <label for="title">Title</label>
+                <input type="text" id="title" name="title" value="{{ task.title }}" required>
+            </div>
+
+            <!-- 기타 폼 필드 -->
+            <div id="taskDetails">
+                <button type="submit" class="btn btn-success">저장</button>
+                <button type="button" class="btn btn-secondary" onclick="closeModal()">취소</button>
+            </div>
+        </form>
     </div>
 </div>
 

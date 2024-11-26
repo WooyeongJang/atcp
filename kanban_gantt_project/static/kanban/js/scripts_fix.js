@@ -18,8 +18,8 @@ function closeModal() {
     modal_check.style.display = 'none';
 
 
-    // 닫기 버튼을 눌렀을 때 특정 URL로 리디렉션
-    window.location.href = 'http://localhost:8000/kanban/test/';
+    // // 닫기 버튼을 눌렀을 때 특정 URL로 리디렉션
+    // window.location.href = 'http://localhost:8000/kanban/test/';
 }
 
 
@@ -42,12 +42,14 @@ function deleteEditTask() {
 // Task Detail Modal
 function openDetailModal(taskId) {
     // 현재 URL에 task_id를 추가하여 페이지 새로고침
-    const url = new URL(window.location.href);
-    url.searchParams.set('task_id', taskId);
-    window.location.href = url;
+    const url = `?task_id=${taskId}`;
+    window, location.href = url;
+    document.getElementById('checkModal').style.display = 'flex';
 }
 
-
+function openEditModal() {
+    document.getElementById('editModal').style.display = 'flex';
+}
 
 
 

@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from .models import Column, Task
 from rest_framework import viewsets
 from .serializers import ColumnSerializer, TaskSerializer
@@ -23,7 +23,7 @@ def board_test_view(request):
     task = None  # 기본값 설정
 
     task_id = request.GET.get('task_id')
-    if task_id:
+    if task_id and task_id.isdigit():
         task = get_object_or_404(Task, id=task_id)
 
     columns = Column.objects.prefetch_related('tasks').all().order_by('order')
@@ -39,7 +39,16 @@ def delete_task(request, task_id):
     return HttpResponse(status=405)
 
 
-
+def edit_task(request, task_id):
+    task = get_object_or_404(Task, id=task_id)
+    if request.method == 'POST':
+        form = TaskForm(request.POST, instance=task)
+        if form.is_valid():
+            form.save()
+            return JsonResponse({'message': 'Task updated successfully!'})
+    else:
+        form = TaskForm(instance=task)
+    return JsonResponse({'error': 'Invalid request!'})
 
 
 
